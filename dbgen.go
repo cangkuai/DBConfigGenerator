@@ -5,21 +5,32 @@ import (
 	"os"
 )
 
-func GenDB() {
-	fmt.Print("请输入数据库类型")
+func GenDB(confpath string) {
+	fmt.Print("请输入数据库类型:")
 	var dbtype string
+	var dburl string
 	fmt.Scanln(&dbtype)
 	switch dbtype {
 	case "mysql":
-		mysqlconf()
+		dburl = mysqlconf()
 	case "postgres":
-		pgconf()
-	case "sql server":
-		sqlserverconf()
+		dburl = pgconf()
+	case "sqlserver":
+		dburl = sqlserverconf()
 	case "tidb":
-		mysqlconf()
+		dburl = mysqlconf()
 	default:
 		fmt.Println("未知数据库")
 		os.Exit(3)
 	}
+	strs := "dbtype : " + dbtype + "\ndburl : " + dburl
+	f, err := os.Create(confpath)
+
+	defer f.Close()
+	if err != nil {
+		fmt.Println(err.Error())
+	} else {
+		_, err = f.Write([]byte(strs))
+	}
+
 }
