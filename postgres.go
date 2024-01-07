@@ -2,8 +2,8 @@ package dbconfiggenerator
 
 import "fmt"
 
-func mysqlconf() string {
-	var ip, port, user, pass, dbname string
+func pgconf() string {
+	var ip, port, user, pass, dbname, timez string
 	fmt.Print("请输入ip:")
 	fmt.Scanln(&ip)
 	fmt.Print("请输入端口:")
@@ -14,7 +14,12 @@ func mysqlconf() string {
 	fmt.Scanln(&pass)
 	fmt.Print("请输入数据库名:")
 	fmt.Scanln(&dbname)
-	res := user + ":" + pass + "@tcp(" + ip + ":" + port + ")/" + dbname + "?charset=utf8mb4&parseTime=True&loc=Local"
+	fmt.Print("请输入时区(默认为上海):")
+	fmt.Scanln(&timez)
+	if timez == "" {
+		timez = "Asia/Shanghai"
+	}
+	res := "host=" + ip + " user=" + user + " password=" + pass + " dbname=" + dbname + " port=" + port + " sslmode=disable TimeZone=" + timez
 	fmt.Println("合成结果为:" + res)
 	return res
 }

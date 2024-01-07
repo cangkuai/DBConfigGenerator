@@ -12,6 +12,12 @@ func GenDB() {
 	switch dbtype {
 	case "mysql":
 		mysqlconf()
+	case "postgres":
+		pgconf()
+	case "sql server":
+		sqlserverconf()
+	case "tidb":
+		mysqlconf()
 	default:
 		fmt.Println("未知数据库")
 		os.Exit(3)

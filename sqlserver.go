@@ -2,7 +2,7 @@ package dbconfiggenerator
 
 import "fmt"
 
-func mysqlconf() string {
+func sqlserverconf() string {
 	var ip, port, user, pass, dbname string
 	fmt.Print("请输入ip:")
 	fmt.Scanln(&ip)
@@ -14,7 +14,7 @@ func mysqlconf() string {
 	fmt.Scanln(&pass)
 	fmt.Print("请输入数据库名:")
 	fmt.Scanln(&dbname)
-	res := user + ":" + pass + "@tcp(" + ip + ":" + port + ")/" + dbname + "?charset=utf8mb4&parseTime=True&loc=Local"
+	res := "sqlserver://" + user + ":" + pass + "@" + ip + ":" + port + "?database=" + dbname
 	fmt.Println("合成结果为:" + res)
 	return res
 }
